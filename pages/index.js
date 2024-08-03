@@ -4,23 +4,29 @@ import Header from "@/component/Header";
 import Featured from "@/component/Featured";
 import Product from "@/models/Product";
 import { connectToDB } from "@/libs/connect";
+import NewProducts from "@/component/NewProducts";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ product }) {
+export default function Home({ featuredProduct,newProduct }) {
+  console.log(featuredProduct)
   return (
     <>
       <Header />
-      {product && <Featured product={product} />}{" "}
-    </>
+      {featuredProduct && <Featured product={featuredProduct} />}{" "}
+{ newProduct &&   <NewProducts products={newProduct}/>
+}    </>
   );
 }
 
 export async function getServerSideProps() {
-  const faeturedproductId = "66ab99ee53a38e5b939856d0";
+  const faeturedproductId = "66adb1718f4fcefa38c05ac6";
   await connectToDB();
-  const product = await Product.findById(faeturedproductId);
+  const featuredProduct = await Product.findById(faeturedproductId);
+  const newProduct = await Product.find({},null,{sort:{'_id':-1}},{limit:10})
   return {
-    props: { product: JSON.parse(JSON.stringify(product)) },
+    props: { featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
+      newProduct:JSON.parse(JSON.stringify(newProduct))
+     },
   };
 }
