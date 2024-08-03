@@ -6,6 +6,8 @@ export const ButtonStyle = css`
   box-sizing: border-box;
   display: inline-flex;
   text-decoration: none;
+  font-weight:500;
+  font-family: roboto;
   border-radius: 5px;
   cursor: pointer;
   align-items: center;
