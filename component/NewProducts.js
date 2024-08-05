@@ -20,7 +20,7 @@ const NewProducts = ({ products }) => {
       <Title>New Arrivals</Title>
       <ProductGrid>
         {products &&
-          products.map((product, index) => <ProductBox {...product} />)}
+          products.map((product, index) => <ProductBox key={index} {...product} />)}
       </ProductGrid>
     </Center>
   );
