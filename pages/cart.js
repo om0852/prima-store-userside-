@@ -47,6 +47,57 @@ const CartPage = () => {
   const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [address, setAddress] = useState({});
+  const [isProcessing, setIsProcessing] = useState(false);
+  let total = 0;
+  for (const pId of cartProducts) {
+    const price = products.find((p) => p._id == pId)?.price || 0;
+    total += price;
+  }
+  const handlePayment = async () => {
+    setIsProcessing(true);
+    try {
+      const response1 = await axios.post("/api/checkout", {
+        ...address,
+        cartProducts: cartProducts.join(","),
+        totalPrice: total,
+      });
+      console.log(response1);
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
+        amount: total * 100,
+        currency: "INR",
+        name: "Prima Store",
+        description: "test transaction",
+        order_id: response1.data.order_id,
+        handler: async function (response) {
+          try {
+            
+            await axios.post("/api/paymentConfirmation", {
+              state: response.status_code,
+              id: response1.data.id,
+              order_id: response.order_id,
+            });
+            
+          } catch (error) {
+            await axios.post("/api/paymentConfirmation", {
+              state: false,
+              id: response1.data.id,
+            });
+          }
+        },
+        prefill: {
+          name: address.name,
+          email: address.email,
+          contact: address.phoneno,
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleAddress = (e) => {
     setAddress((prev) => ({
@@ -70,11 +121,7 @@ const CartPage = () => {
   const lessOfThisProduct = (id) => {
     removeProduct(id);
   };
-  let total = 0;
-  for (const pId of cartProducts) {
-    const price = products.find((p) => p._id == pId)?.price || 0;
-    total += price;
-  }
+
   return (
     <>
       <Header />
@@ -135,7 +182,7 @@ const CartPage = () => {
           </Box>
           {!!cartProducts?.length && (
             <Box>
-              <form method="post" action="/api/checkout">
+              <div>
                 <h2 className="text-2xl">Order Information</h2>
                 <Input
                   onChange={(e) => handleAddress(e)}
@@ -190,14 +237,19 @@ const CartPage = () => {
                 />
                 {/* <Input type="text" placeholder="Address 1" />
               <Input type="text" placeholder="Address 2" /> */}
-              <input type="hidden" name="cartProducts" value={cartProducts.join(",")}/>
+                <input
+                  type="hidden"
+                  name="cartProducts"
+                  value={cartProducts.join(",")}
+                />
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handlePayment}
                   className="px-2 py-1 w-full text-md bg-black text-white rounded-md my-3 border-2 border-black"
                 >
                   Continue to payment
                 </button>
-              </form>
+              </div>
             </Box>
           )}
         </ColumnsWrapper>

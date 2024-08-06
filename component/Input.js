@@ -9,7 +9,6 @@ box-sizing: border-box;
 border-radius: 5px;
 `
 const Input = (props) => {
-    console.log(props)
   return <StyledInput {...props} placeholder={props?.placeholder}/>
 }
 
