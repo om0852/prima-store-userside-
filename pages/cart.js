@@ -135,69 +135,69 @@ const CartPage = () => {
           </Box>
           {!!cartProducts?.length && (
             <Box>
-              <h2 className="text-2xl">Order Information</h2>
-              <Input
-                onChange={(e) => handleAddress(e)}
-                name="name"
-                type="text"
-                value={address?.name}
-                placeholder="Name"
-              />
-              <Input
-                onChange={(e) => handleAddress(e)}
-                name="email"
-                type="email"
-                value={address?.email}
-
-                placeholder="Email"
-              />
-              <CityHolder>
+              <form method="post" action="/api/checkout">
+                <h2 className="text-2xl">Order Information</h2>
                 <Input
                   onChange={(e) => handleAddress(e)}
-                  name="city"
+                  name="name"
                   type="text"
-                  value={address?.city}
-
-                  placeholder="City"
+                  value={address?.name}
+                  placeholder="Name"
                 />
                 <Input
                   onChange={(e) => handleAddress(e)}
-                  name="code"
-                  type="text"
-                  value={address?.code}
-
-                  placeholder="Postal Code"
+                  name="email"
+                  type="email"
+                  value={address?.email}
+                  placeholder="Email"
                 />
-              </CityHolder>
-              <Input
+                <CityHolder>
+                  <Input
+                    onChange={(e) => handleAddress(e)}
+                    name="city"
+                    type="text"
+                    value={address?.city}
+                    placeholder="City"
+                  />
+                  <Input
+                    onChange={(e) => handleAddress(e)}
+                    name="code"
+                    type="text"
+                    value={address?.code}
+                    placeholder="Postal Code"
+                  />
+                </CityHolder>
+                <Input
                   onChange={(e) => handleAddress(e)}
                   name="state"
                   type="text"
                   value={address?.state}
-
                   placeholder="State"
                 />
-              <Input
-                onChange={(e) => handleAddress(e)}
-                name="street_address"
-                type="text"
-                value={address?.street_address}
-
-                placeholder="Street Address"
-              />
-              <Input
-                onChange={(e) => handleAddress(e)}
-                name="country"
-                
-                value={address?.country}
-                type="text"
-                placeholder="Country"
-              />
-              {/* <Input type="text" placeholder="Address 1" />
+                <Input
+                  onChange={(e) => handleAddress(e)}
+                  name="street_address"
+                  type="text"
+                  value={address?.street_address}
+                  placeholder="Street Address"
+                />
+                <Input
+                  onChange={(e) => handleAddress(e)}
+                  name="country"
+                  value={address?.country}
+                  type="text"
+                  placeholder="Country"
+                />
+                {/* <Input type="text" placeholder="Address 1" />
               <Input type="text" placeholder="Address 2" /> */}
-              <button className="px-2 py-1 w-full text-md bg-black text-white rounded-md my-3 border-2 border-black">
-                Continue to payment
-              </button>
+              <input type="hidden" name="cartProducts" value={cartProducts.join(",")}/>
+                <button
+                  type="submit"
+                  className="px-2 py-1 w-full text-md bg-black text-white rounded-md my-3 border-2 border-black"
+                >
+                  Continue to payment
+                </button>
+              </form>
             </Box>
           )}
         </ColumnsWrapper>
