@@ -44,7 +44,7 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 const CartPage = () => {
-  const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
+  const { cartProducts, addProduct, removeProduct,setCartProducts } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [address, setAddress] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -77,6 +77,9 @@ const CartPage = () => {
               id: response1.data.id,
               order_id: response.order_id,
             });
+            setCartProducts([]);
+            localStorage.setItem("cart",[])
+
             
           } catch (error) {
             await axios.post("/api/paymentConfirmation", {

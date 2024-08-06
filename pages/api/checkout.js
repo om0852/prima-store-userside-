@@ -48,6 +48,8 @@ console.log(req.body)
             product_data: { name: productInfo.name },
             unit_amount: quantity * productInfo.price,
           },
+          title:productInfo.title,
+          productId:productInfo._id
         });
       }
     }
