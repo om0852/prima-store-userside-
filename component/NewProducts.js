@@ -9,7 +9,7 @@ export const ProductGrid = styled.div`
   gap: 20px;
   padding-top: 10px;
 `;
-const Title = styled.h2`
+ const Title = styled.h2`
   font-size: 2rem;
   margin: 30px 0 0px;
   font-family: 500;

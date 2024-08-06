@@ -6,8 +6,9 @@ import { connectToDB } from "@/libs/connect";
 import Product from "@/models/Product";
 import React from "react";
 import styled from "styled-components";
-const Title = styled.h1`
+export const Title = styled.h1`
   font-size: 1.5rem;
+  font-weight: 500;
 `;
 const ProductPage = ({ allProduct }) => {
   // console.log(allProduct)
@@ -15,7 +16,7 @@ const ProductPage = ({ allProduct }) => {
     <>
       <Header />
       <Center>
-        <Title>Products</Title>
+        <Title>All Products</Title>
         <ProductGrid>
           {allProduct &&
             allProduct.map((product, index) => (
