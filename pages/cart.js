@@ -28,7 +28,7 @@ const ProductImagesBox = styled.div`
   padding: 10px;
   background-color: #f0f0f0;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +38,7 @@ const ProductImagesBox = styled.div`
   }
 `;
 const CartPage = () => {
-  const { cartProducts } = useContext(CartContext);
+  const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -49,6 +49,18 @@ const CartPage = () => {
         .then((res) => setProducts(res.data));
     }
   }, [cartProducts]);
+
+  const moreOfThisProduct = (id) => {
+    addProduct(id);
+  };
+  const lessOfThisProduct = (id) => {
+    removeProduct(id);
+  };
+  let total=0;
+  for(const pId of cartProducts){
+    const price = products.find(p=>p._id==pId)?.price||0
+    total+=price
+  }
   return (
     <>
       <Header />
@@ -57,7 +69,7 @@ const CartPage = () => {
           <Box>
             {!cartProducts?.length && <div>Your cart is empty</div>}
             <h2>Cart</h2>
-            {products?.length > 0 && (
+            {cartProducts?.length > 0 && (
               <Table>
                 <thead>
                   <tr>
@@ -69,7 +81,7 @@ const CartPage = () => {
                 <tbody>
                   {products.map((data, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <ProductInfoCell>
                           <ProductImagesBox>
                             <img src={data.images[0]} />
@@ -77,12 +89,32 @@ const CartPage = () => {
                           {data.title}
                         </ProductInfoCell>
                         <td>
+                          <button
+                            onClick={() => lessOfThisProduct(data._id)}
+                            className="bg-none w-10 h-10 text-black"
+                          >
+                            -
+                          </button>
                           {cartProducts.filter((id) => id === data._id).length}
+                          <button
+                            onClick={() => moreOfThisProduct(data._id)}
+                            className="bg-none w-10 h-10 text-black"
+                          >
+                            +
+                          </button>
                         </td>
-                        <td>{data.price *cartProducts.filter((id) => id === data._id).length}</td>
+                        <td>
+                          {data.price *
+                            cartProducts.filter((id) => id === data._id).length}
+                        </td>
                       </tr>
                     );
                   })}
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>${total}</td>
+                    </tr>
                 </tbody>
               </Table>
             )}

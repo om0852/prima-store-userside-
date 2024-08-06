@@ -48,10 +48,9 @@ const ButtonWrapper = styled.div`
   margin-top: 3vh;
 `;
 const Featured = ({product}) => {
-  const {setCartProducts}=useContext(CartContext)
+  const {setCartProducts,addProduct}=useContext(CartContext)
    function addFeaturedToCart(product){
-    setCartProducts(prev=>[...prev,product]);
-    
+    addProduct(product)    
   }
   return (
     <Bg>

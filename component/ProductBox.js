@@ -55,7 +55,7 @@ const ProductBox = ({
   _id,
 }) => {
   const url = "/product/"+_id;
-  const {setCartProducts}=useContext(CartContext);
+  const {setCartProducts,addProduct}=useContext(CartContext);
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
@@ -67,7 +67,7 @@ const ProductBox = ({
         <Title href={url}> {title}</Title>
         <PriceRow>
           <Price>₹{price}</Price>
-          <Buttons onClick={()=>setCartProducts(prev=>[...prev,_id])} primary outline>
+          <Buttons onClick={()=>addProduct(_id)} primary outline>
             Add to cart
           </Buttons>
         </PriceRow>
