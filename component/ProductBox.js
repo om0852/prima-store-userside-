@@ -37,7 +37,8 @@ const Price = styled.div`
 
 const Title = styled(Link)`
   font-weight: 500;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-size: 0%.9rem;
   margin: 0;
   color: inherit;
@@ -54,8 +55,8 @@ const ProductBox = ({
   price,
   _id,
 }) => {
-  const url = "/product/"+_id;
-  const {setCartProducts,addProduct}=useContext(CartContext);
+  const url = "/product/" + _id;
+  const { setCartProducts, addProduct } = useContext(CartContext);
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
@@ -67,7 +68,10 @@ const ProductBox = ({
         <Title href={url}> {title}</Title>
         <PriceRow>
           <Price>₹{price}</Price>
-          <button onClick={()=>addProduct(_id)} className="bg-none border-2 border-e-purple-700 py-1 px-2 mx-1">
+          <button
+            onClick={() => addProduct(_id)}
+            className="bg-none border-2 border-e-purple-700 py-1 px-2 mx-1"
+          >
             Add to cart
           </button>
         </PriceRow>

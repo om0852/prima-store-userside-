@@ -16,7 +16,6 @@ const ProductPage = ({ allProduct }) => {
       <Header />
       <Center>
         <Title>Products</Title>
-        {/* {allProduct?.length>0 && allProduct} */}
         <ProductGrid>
           {allProduct &&
             allProduct.map((product, index) => (
