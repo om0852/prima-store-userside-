@@ -2,6 +2,7 @@ import Buttons from "@/component/Buttons";
 import { CartContext } from "@/component/CartContext";
 import Center from "@/component/Center";
 import Header from "@/component/Header";
+import Input from "@/component/Input";
 import Table from "@/component/StyledTable";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
@@ -37,9 +38,22 @@ const ProductImagesBox = styled.div`
     max-height: 80px;
   }
 `;
+
+const CityHolder = styled.div`
+  display: flex;
+  gap: 5px;
+`;
 const CartPage = () => {
   const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
   const [products, setProducts] = useState([]);
+  const [address, setAddress] = useState({});
+
+  const handleAddress = (e) => {
+    setAddress((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -56,10 +70,10 @@ const CartPage = () => {
   const lessOfThisProduct = (id) => {
     removeProduct(id);
   };
-  let total=0;
-  for(const pId of cartProducts){
-    const price = products.find(p=>p._id==pId)?.price||0
-    total+=price
+  let total = 0;
+  for (const pId of cartProducts) {
+    const price = products.find((p) => p._id == pId)?.price || 0;
+    total += price;
   }
   return (
     <>
@@ -114,7 +128,7 @@ const CartPage = () => {
                     <td></td>
                     <td></td>
                     <td>${total}</td>
-                    </tr>
+                  </tr>
                 </tbody>
               </Table>
             )}
@@ -122,8 +136,65 @@ const CartPage = () => {
           {!!cartProducts?.length && (
             <Box>
               <h2 className="text-2xl">Order Information</h2>
-              <input type="text" placeholder="Address" />
-              <input type="text" placeholder="Address 2" />
+              <Input
+                onChange={(e) => handleAddress(e)}
+                name="name"
+                type="text"
+                value={address?.name}
+                placeholder="Name"
+              />
+              <Input
+                onChange={(e) => handleAddress(e)}
+                name="email"
+                type="email"
+                value={address?.email}
+
+                placeholder="Email"
+              />
+              <CityHolder>
+                <Input
+                  onChange={(e) => handleAddress(e)}
+                  name="city"
+                  type="text"
+                  value={address?.city}
+
+                  placeholder="City"
+                />
+                <Input
+                  onChange={(e) => handleAddress(e)}
+                  name="code"
+                  type="text"
+                  value={address?.code}
+
+                  placeholder="Postal Code"
+                />
+              </CityHolder>
+              <Input
+                  onChange={(e) => handleAddress(e)}
+                  name="state"
+                  type="text"
+                  value={address?.state}
+
+                  placeholder="State"
+                />
+              <Input
+                onChange={(e) => handleAddress(e)}
+                name="street_address"
+                type="text"
+                value={address?.street_address}
+
+                placeholder="Street Address"
+              />
+              <Input
+                onChange={(e) => handleAddress(e)}
+                name="country"
+                
+                value={address?.country}
+                type="text"
+                placeholder="Country"
+              />
+              {/* <Input type="text" placeholder="Address 1" />
+              <Input type="text" placeholder="Address 2" /> */}
               <button className="px-2 py-1 w-full text-md bg-black text-white rounded-md my-3 border-2 border-black">
                 Continue to payment
               </button>
