@@ -19,7 +19,24 @@ const Box = styled.div`
   border-radius: 10px;
   padding: 30px;
 `;
-
+const ProductInfoCell = styled.td`
+  padding: 10px 0;
+`;
+const ProductImagesBox = styled.div`
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    max-width: 80px;
+    max-height: 80px;
+  }
+`;
 const CartPage = () => {
   const { cartProducts } = useContext(CartContext);
   const [products, setProducts] = useState([]);
@@ -40,7 +57,7 @@ const CartPage = () => {
           <Box>
             {!cartProducts?.length && <div>Your cart is empty</div>}
             <h2>Cart</h2>
-            {cartProducts?.length > 0 && (
+            {products?.length > 0 && (
               <Table>
                 <thead>
                   <tr>
@@ -53,9 +70,16 @@ const CartPage = () => {
                   {products.map((data, index) => {
                     return (
                       <tr>
-                        <td>{data.title}</td>
-                        <td>{cartProducts.filter(id=>id===data._id).length}</td>
-                        <td>{data.price}</td>
+                        <ProductInfoCell>
+                          <ProductImagesBox>
+                            <img src={data.images[0]} />
+                          </ProductImagesBox>
+                          {data.title}
+                        </ProductInfoCell>
+                        <td>
+                          {cartProducts.filter((id) => id === data._id).length}
+                        </td>
+                        <td>{data.price *cartProducts.filter((id) => id === data._id).length}</td>
                       </tr>
                     );
                   })}

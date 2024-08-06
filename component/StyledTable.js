@@ -5,9 +5,16 @@ width: 100%;
 th{
     text-align: left;
     text-transform: uppercase;
-    color: black;
+    color: #ccc;
+    font-weight: 500;
+    font-size: large.7rem;
+
+}
+td{
+  border-top: 1px solid rgba(0,0,0,.1);
+
 }
 `;
-export default function Table({ props }) {
-  return <StyledTable {...props} />;
+export default function Table({children, props }) {
+  return <StyledTable {...props} >{children}</StyledTable>;
 }
