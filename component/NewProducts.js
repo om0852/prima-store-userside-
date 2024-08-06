@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Center from "./Center";
 import ProductBox from "./ProductBox";
 
-const ProductGrid = styled.div`
+export const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap:20px;

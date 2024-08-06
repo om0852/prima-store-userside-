@@ -31,7 +31,7 @@ const PriceRow = styled.div`
   margin-top: 2px;
 `;
 const Price = styled.div`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
 `;
 
@@ -67,9 +67,9 @@ const ProductBox = ({
         <Title href={url}> {title}</Title>
         <PriceRow>
           <Price>₹{price}</Price>
-          <Buttons onClick={()=>addProduct(_id)} primary outline>
+          <button onClick={()=>addProduct(_id)} className="bg-none border-2 border-e-purple-700 py-1 px-2 mx-1">
             Add to cart
-          </Buttons>
+          </button>
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>
