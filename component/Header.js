@@ -38,9 +38,12 @@ const StyledNav = styled.nav`
 const NavLink = styled(Link)`
   display: block;
   color: #aaa;
+  margin: 2vh 0;
   text-decoration: none;
   @media screen and (min-width: 786px) {
     padding: 0;
+    margin: 0;
+
   }
 `;
 const NavButton = styled.div`

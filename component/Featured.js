@@ -12,19 +12,28 @@ const Bg = styled.div`
 `;
 const Title = styled.h1`
   margin: 0;
+  text-transform: capitalize;
   line-height: 8vh;
   margin-bottom: 1vh;
   font-size: 3rem;
+  @media screen and (min-width: 786px) {
+    font-size: 4rem;
+    margin-bottom: 3vh;
+
+
+  }
   font-weight: normal;
 `;
 const Desc = styled.p`
   color: #aaa;
+  text-align: justify;
   font-size: 0.8rem;
 `;
 const Wrapper = styled.div`
   display: grid;
   gap: 40px;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1fr;
+
   img {
     max-width: 100%;
     background-color: none;
@@ -34,11 +43,29 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column; */
   }
+  img{
+    max-width: 100%;
+    max-height: 200px;
+  }
+  div:nth-child(1){
+    order: 2;
+  }
+  @media screen and (min-width: 786px) {
+    grid-template-columns: 1.1fr 0.9fr;
+
+    div:nth-child(1){
+    order: 0;
+  }
+  }
 `;
 
 const Column = styled.div`
-  /* display: flex;
- align-items: center; */
+  display: grid;
+ place-items: center;
+ @media screen and (min-width: 786px) {
+  display: block;
+
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -63,7 +90,7 @@ const Featured = ({product}) => {
              {product.description}
             </Desc>
             <ButtonWrapper>
-              <ButtonLink href={"/products/"+product._id} outline white >
+              <ButtonLink href={"/product/"+product._id} outline white >
                 Read More
               </ButtonLink>
               <Buttons white onClick={()=>addFeaturedToCart(product._id)} >

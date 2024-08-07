@@ -12,7 +12,7 @@ const ProductInfoBox = styled.div`
 `;
 const WhiteBox = styled(Link)`
   background-color: #fff;
-  padding: 20px;
+  padding: 10px;
   height: 150px;
   display: flex;
   align-items: center;
@@ -21,13 +21,16 @@ const WhiteBox = styled(Link)`
   border-radius: 10px;
   img {
     max-width: 100%;
-    max-height: 100px;
+    max-height: 120px;
   }
 `;
 const PriceRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: block;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   margin-top: 2px;
 `;
 const Price = styled.div`
@@ -70,7 +73,7 @@ const ProductBox = ({
           <Price>₹{price}</Price>
           <button
             onClick={() => addProduct(_id)}
-            className="bg-none border-2 border-e-purple-700 py-1 px-2 mx-1"
+            className="bg-green-800 text-white border-2 border-purple-700 py-1 px-2 mx-1 w-full md:w-1/2"
           >
             Add to cart
           </button>
