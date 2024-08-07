@@ -16,7 +16,7 @@ export default function App({ Component,   pageProps: { session, ...pageProps },
       <GlobalStyles></GlobalStyles>
       <SessionProvider session={session}>
         <CartContextProvider>
-          <Component {...pageProps} />;
+          <Component {...pageProps} />
         </CartContextProvider>
       </SessionProvider>
     </>

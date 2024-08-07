@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledNav = styled.nav`
-  ${(props) => (props.mobileNavActive ? `display:block;` : `display:none;`)}
+  ${(props) => (props?.mobileNavActive ? `display:block;` : `display:none;`)}
   position: fixed;
   top: 0px;
   right: 0px;

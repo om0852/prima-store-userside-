@@ -8,7 +8,12 @@ const BigImg = styled.img`
 const ImageButtons = styled.div`
   display: flex;
   gap: 10px;
+  justify-content: center;
+
   margin-top: 10px;
+  @media screen and (min-width: 768px) {
+    justify-content: start;
+  }
 `;
 const ImageContainer = styled.div`
   text-align: center;

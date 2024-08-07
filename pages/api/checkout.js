@@ -44,12 +44,13 @@ console.log(req.body)
         line_items.push({
           quantity,
           price_data: {
-            curreny: "USD",
-            product_data: { name: productInfo.name },
-            unit_amount: quantity * productInfo.price,
+            curreny: "INR",
+            unit_amount: productInfo.price,
           },
           title:productInfo.title,
-          productId:productInfo._id
+          images:productInfo.images[0],
+          productId:productInfo._id,
+          OrderState:[]
         });
       }
     }

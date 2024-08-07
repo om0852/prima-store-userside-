@@ -10,9 +10,14 @@ import { CartContext } from "@/component/CartContext";
 
 const ColWrapper = styled.div`
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: 1fr;
   gap: 40px;
   margin-top: 40px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 0.8fr 1.2fr;
+    justify-content: start;
+
+  }
 `;
 
 const WhiteBox = styled.div`
@@ -46,7 +51,7 @@ const ProductPage = ({ product }) => {
           </WhiteBox>
           <Box>
             <Title>{product?.title}</Title>
-            <p>{product.description}</p>
+            <p className="text-justify">{product.description}</p>
             <div className="flex justify-between w-1/2 items-center">
             <PriceRow>₹{product.price}</PriceRow>
             <button onClick={()=>addProduct(product._id)} className="border-2 bg-green-800 border-green-800 rounded-md text-white my-4 py-1 px-6 ">Add to cart</button>

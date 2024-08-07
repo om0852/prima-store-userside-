@@ -14,7 +14,7 @@ const ModelSchema = new Schema({
     state:String,
     number:Number,
     paid:{type:Boolean,default:false},
-    order_id:String
+    order_id:String,
 
 },{timestamps:true})
 
