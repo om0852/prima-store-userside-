@@ -61,6 +61,7 @@ console.log(req.body)
       state,
       country,
       code,
+      paid:true,
       street_address,
       
     });

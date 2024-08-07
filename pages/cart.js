@@ -5,6 +5,7 @@ import Header from "@/component/Header";
 import Input from "@/component/Input";
 import Table from "@/component/StyledTable";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -49,8 +50,9 @@ const CityHolder = styled.div`
 `;
 const CartPage = () => {
   const { cartProducts, addProduct, removeProduct,setCartProducts } = useContext(CartContext);
+  const { data: session } = useSession();
   const [products, setProducts] = useState([]);
-  const [address, setAddress] = useState({});
+  const [address, setAddress] = useState({email:session?.user?.email});
   const [isProcessing, setIsProcessing] = useState(false);
   let total = 0;
   for (const pId of cartProducts) {
@@ -60,36 +62,25 @@ const CartPage = () => {
   const handlePayment = async () => {
     setIsProcessing(true);
     try {
-      const response1 = await axios.post("/api/checkout", {
-        ...address,
-        cartProducts: cartProducts.join(","),
-        totalPrice: total,
-      });
-      console.log(response1);
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
         amount: total * 100,
         currency: "INR",
         name: "Prima Store",
         description: "test transaction",
-        order_id: response1.data.order_id,
         handler: async function (response) {
           try {
-            
-            await axios.post("/api/paymentConfirmation", {
-              state: response.status_code,
-              id: response1.data.id,
-              order_id: response.order_id,
+            const response1 = await axios.post("/api/checkout", {
+              ...address,
+              cartProducts: cartProducts.join(","),
+              totalPrice: total,
             });
             setCartProducts([]);
             localStorage.setItem("cart",[])
 
             
           } catch (error) {
-            await axios.post("/api/paymentConfirmation", {
-              state: false,
-              id: response1.data.id,
-            });
+           
           }
         },
         prefill: {
@@ -181,7 +172,7 @@ const CartPage = () => {
                   <tr>
                     <td></td>
                     <td></td>
-                    <td>${total}</td>
+                    <td>₹{total}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -189,27 +180,38 @@ const CartPage = () => {
           </Box>
           {!!cartProducts?.length && (
             <Box>
-              <div>
+              <form>
                 <h2 className="text-2xl">Order Information</h2>
                 <Input
                   onChange={(e) => handleAddress(e)}
                   name="name"
                   type="text"
+                  required
                   value={address?.name}
                   placeholder="Name"
                 />
-                <Input
+                {/* <Input
                   onChange={(e) => handleAddress(e)}
                   name="email"
+                  required
                   type="email"
                   value={address?.email}
                   placeholder="Email"
+                /> */}
+                <Input
+                  onChange={(e) => handleAddress(e)}
+                  name="number"
+                  required
+                  type="number"
+                  value={address?.number}
+                  placeholder="Number"
                 />
                 <CityHolder>
                   <Input
                     onChange={(e) => handleAddress(e)}
                     name="city"
                     type="text"
+                    required
                     value={address?.city}
                     placeholder="City"
                   />
@@ -217,6 +219,7 @@ const CartPage = () => {
                     onChange={(e) => handleAddress(e)}
                     name="code"
                     type="text"
+                    required
                     value={address?.code}
                     placeholder="Postal Code"
                   />
@@ -225,6 +228,7 @@ const CartPage = () => {
                   onChange={(e) => handleAddress(e)}
                   name="state"
                   type="text"
+                  required
                   value={address?.state}
                   placeholder="State"
                 />
@@ -232,12 +236,14 @@ const CartPage = () => {
                   onChange={(e) => handleAddress(e)}
                   name="street_address"
                   type="text"
+                  required
                   value={address?.street_address}
                   placeholder="Street Address"
                 />
                 <Input
                   onChange={(e) => handleAddress(e)}
                   name="country"
+                  required
                   value={address?.country}
                   type="text"
                   placeholder="Country"
@@ -245,6 +251,7 @@ const CartPage = () => {
                 {/* <Input type="text" placeholder="Address 1" />
               <Input type="text" placeholder="Address 2" /> */}
                 <input
+                required
                   type="hidden"
                   name="cartProducts"
                   value={cartProducts.join(",")}
@@ -256,7 +263,7 @@ const CartPage = () => {
                 >
                   Continue to payment
                 </button>
-              </div>
+              </form>
             </Box>
           )}
         </ColumnsWrapper>

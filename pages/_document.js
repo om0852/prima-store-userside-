@@ -5,7 +5,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
+      <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
       </Head>
       <body>
         <Main />

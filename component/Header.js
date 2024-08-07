@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Center from "./Center";
 import { CartContext } from "./CartContext";
+import { signIn, signOut, useSession } from "next-auth/react";
 const StyledHeader = styled.header`
   background-color: #222;
 `;
@@ -62,6 +63,24 @@ const NavButton = styled.div`
 const Header = () => {
   const { cartProducts } = useContext(CartContext);
   const [mobileNavActive, setMobileNavActive] = useState(false);
+
+  
+  const { data: session } = useSession();
+  if (!session) {
+    return (
+      <div className="bg-customBg w-screen h-screen flex items-center">
+        <div className="text-center w-full ">
+          <button
+            onClick={() => signIn("google")}
+            className="bg-blue-400 p-2 rounded-lg px-4"
+          >
+            {" "}
+            Login With Google
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <StyledHeader>
       <Center>
@@ -70,9 +89,9 @@ const Header = () => {
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={"/"}>Home</NavLink>
             <NavLink href={"/products"}>All Product</NavLink>
-            <NavLink href={"/categories"}>Categories</NavLink>
-            <NavLink href={"/account"}>Account</NavLink>
+            <NavLink href={"/myorders"}>My Orders</NavLink>
             <NavLink href={"/cart"}>Cart({cartProducts.length})</NavLink>
+            <NavLink href={"/"} onClick={()=>signOut()}>Logout</NavLink>
           </StyledNav>
           <NavButton
             onClick={() => {

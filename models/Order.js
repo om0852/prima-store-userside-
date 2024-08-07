@@ -12,6 +12,7 @@ const ModelSchema = new Schema({
     street_address:String,
     country:String,
     state:String,
+    number:Number,
     paid:{type:Boolean,default:false},
     order_id:String
 
