@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Center from "./Center";
 import { CartContext } from "./CartContext";
@@ -9,6 +9,8 @@ const StyledHeader = styled.header`
 const Logo = styled(Link)`
   color: #fff;
   text-decoration: none;
+  position: relative;
+  z-index: 3;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -18,13 +20,13 @@ const Wrapper = styled.div`
 `;
 
 const StyledNav = styled.nav`
+  ${(props) => (props.mobileNavActive ? `display:block;` : `display:none;`)}
   position: fixed;
-  top: 50px;
-  right: 0;
-  left: 20px;
-  bottom: 0;
-  padding: 20px;
-  display: block;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  padding: 70px 20px 20px;
   background-color: #222;
   gap: 15px;
   @media screen and (min-width: 786px) {
@@ -37,34 +39,43 @@ const NavLink = styled(Link)`
   display: block;
   color: #aaa;
   text-decoration: none;
+  @media screen and (min-width: 786px) {
+    padding: 0;
+  }
 `;
 const NavButton = styled.div`
   background-color: transparent;
   width: 30px;
   height: 30px;
+  position: relative;
+  z-index: 3;
   border: 0;
   color: red;
   cursor: pointer;
-  @media screen and (min-width:756px) {
+  @media screen and (min-width: 756px) {
     display: none;
   }
 `;
 const Header = () => {
   const { cartProducts } = useContext(CartContext);
-
+  const [mobileNavActive, setMobileNavActive] = useState(false);
   return (
     <StyledHeader>
       <Center>
         <Wrapper>
           <Logo href={"/"}>PrimaStore</Logo>
-          <StyledNav>
+          <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={"/"}>Home</NavLink>
             <NavLink href={"/products"}>All Product</NavLink>
             <NavLink href={"/categories"}>Categories</NavLink>
             <NavLink href={"/account"}>Account</NavLink>
             <NavLink href={"/cart"}>Cart({cartProducts.length})</NavLink>
           </StyledNav>
-          <NavButton>
+          <NavButton
+            onClick={() => {
+              setMobileNavActive((prev) => !prev);
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
