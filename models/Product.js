@@ -15,6 +15,7 @@ const ModelSchema = new Schema(
     },
     category: { type: mongoose.Types.ObjectId, ref: "categories" },
     properties: { type: Object },
+    delivery_charges:{type:Number}
   },
   { timestamps: true }
 );

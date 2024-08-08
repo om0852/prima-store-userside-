@@ -22,6 +22,7 @@ export default async function handler(req, res) {
       email,
       city,
       code,
+      number,
       state,
       street_address,
       country,
@@ -62,6 +63,7 @@ console.log(req.body)
       state,
       country,
       code,
+      number,
       paid:true,
       street_address,
       
