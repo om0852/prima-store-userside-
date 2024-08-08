@@ -71,7 +71,7 @@ const Header = () => {
       <div className="bg-customBg w-screen h-screen flex items-center">
         <div className="text-center w-full ">
           <button
-            onClick={() => signIn("google")}
+            onClick={() => signIn("google",{callbackUrl:"http://localhost:3000"})}
             className="bg-blue-400 p-2 rounded-lg px-4"
           >
             {" "}
