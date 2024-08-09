@@ -1,9 +1,11 @@
+"use client"
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Center from "./Center";
 import { CartContext } from "./CartContext";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const StyledHeader = styled.header`
   background-color: #222;
 `;
@@ -44,7 +46,6 @@ const NavLink = styled(Link)`
   @media screen and (min-width: 786px) {
     padding: 0;
     margin: 0;
-
   }
 `;
 const NavButton = styled.div`
@@ -61,26 +62,18 @@ const NavButton = styled.div`
   }
 `;
 const Header = () => {
+ const  router = useRouter();
   const { cartProducts } = useContext(CartContext);
   const [mobileNavActive, setMobileNavActive] = useState(false);
 
-  
   const { data: session } = useSession();
-  if (!session) {
-    return (
-      <div className="bg-customBg w-screen h-screen flex items-center">
-        <div className="text-center w-full ">
-          <button
-            onClick={() => signIn("google",{callbackUrl:"http://localhost:3000"})}
-            className="bg-blue-400 p-2 rounded-lg px-4"
-          >
-            {" "}
-            Login With Google
-          </button>
-        </div>
-      </div>
-    );
-  }
+  useEffect(()=>{
+    if (!session) {
+      router.push("/login")
+    }  
+  },[session])
+  
+  
   return (
     <StyledHeader>
       <Center>
@@ -91,7 +84,9 @@ const Header = () => {
             <NavLink href={"/products"}>All Product</NavLink>
             <NavLink href={"/myorders"}>My Orders</NavLink>
             <NavLink href={"/cart"}>Cart({cartProducts.length})</NavLink>
-            <NavLink href={"/"} onClick={()=>signOut()}>Logout</NavLink>
+            <NavLink href={"/"} onClick={() => signOut()}>
+              Logout
+            </NavLink>
           </StyledNav>
           <NavButton
             onClick={() => {

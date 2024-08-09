@@ -33,7 +33,9 @@ const MyOrders = () => {
       <Header />
       <div className="w-full h-auto">
         {/* <Title>My Orders</Title> */}
-        <Title className="py-2">My Orders</Title>
+        <Title className="py-2 px-4">My Orders</Title>
+        {orders.length==0 &&         <Title className="py-2 px-4 text-center">No Order Found</Title>
+ }
         {orders &&
           orders.map((order, index) => (
             <div key={index} className="w-full border-y-2 border-gray-400">

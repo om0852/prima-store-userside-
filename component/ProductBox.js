@@ -73,7 +73,7 @@ const ProductBox = ({
           <Price>₹{price}</Price>
           <button
             onClick={() => addProduct(_id)}
-            className="bg-green-800 text-white border-2 border-purple-700 py-1 px-2 mx-1 w-full md:w-1/2"
+            className="bg-green-800 rounded-md mx-2 text-white border-2 border-purple-700 py-1 px-2 mx-2 w-[auto] md:w-1/2"
           >
             Add to cart
           </button>

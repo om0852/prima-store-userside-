@@ -70,7 +70,7 @@ const MyOrder = () => {
           <div className="grid place-items-center w-[30px] py-4">
             <div
               className={`w-4 h-4 rounded-full ${
-                order && line_items?.OrderState.length == 1
+                order && line_items?.OrderState.length >0
                   ? "bg-green-500"
                   : "bg-none border-2 border-gray-400"
               } relative`}
@@ -79,10 +79,10 @@ const MyOrder = () => {
                 Order Confirmed
               </div>
             </div>
-            <Line state={order && line_items?.OrderState.length == 2}></Line>
+            <Line state={order && line_items?.OrderState.length >1}></Line>
             <div
               className={`w-4 h-4 rounded-full ${
-                order && line_items?.OrderState.length == 2
+                order && line_items?.OrderState.length >1
                   ? "bg-green-500"
                   : "bg-none border-2 border-gray-400"
               } relative`}
@@ -91,10 +91,10 @@ const MyOrder = () => {
                 Shipped
               </div>
             </div>
-            <Line state={order && line_items?.OrderState.length == 3}></Line>
+            <Line state={order && line_items?.OrderState.length >2}></Line>
             <div
               className={`w-4 h-4 rounded-full ${
-                order && line_items?.OrderState.length == 3
+                order && line_items?.OrderState.length >2
                   ? "bg-green-500"
                   : "bg-none border-2 border-gray-400"
               } relative`}
@@ -103,10 +103,10 @@ const MyOrder = () => {
                 Out For Delivery
               </div>
             </div>
-            <Line state={order && line_items?.OrderState.length == 4}></Line>
+            <Line state={order && line_items?.OrderState.length >3}></Line>
             <div
               className={`w-4 h-4 rounded-full ${
-                order && line_items?.OrderState.length == 4
+                order && line_items?.OrderState.length >3
                   ? "bg-green-500"
                   : "bg-none border-2 border-gray-400"
               } relative`}

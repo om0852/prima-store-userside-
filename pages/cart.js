@@ -163,7 +163,7 @@ const CartPage = () => {
                           </button>
                         </td>
                         <td>
-                          {data.price *
+                        ₹{data.price *
                             cartProducts.filter((id) => id === data._id).length}
                         </td>
                       </tr>

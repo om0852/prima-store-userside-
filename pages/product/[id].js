@@ -16,7 +16,6 @@ const ColWrapper = styled.div`
   @media screen and (min-width: 768px) {
     grid-template-columns: 0.8fr 1.2fr;
     justify-content: start;
-
   }
 `;
 
@@ -33,14 +32,14 @@ const Box = styled.div`
   height: auto;
 `;
 const PriceRow = styled.div`
-display: flex;
-gap: 20px;
-font-weight: 500;
-font-size: 1.2rem;
-align-items:center;
-`
+  display: flex;
+  gap: 20px;
+  font-weight: 500;
+  font-size: 1.2rem;
+  align-items: center;
+`;
 const ProductPage = ({ product }) => {
-  const {addProduct}=useContext(CartContext);
+  const { addProduct } = useContext(CartContext);
   return (
     <>
       <Header />
@@ -51,10 +50,22 @@ const ProductPage = ({ product }) => {
           </WhiteBox>
           <Box>
             <Title>{product?.title}</Title>
+            <ul>
+              {Object.entries(product.properties).map(([key, value]) => (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              ))}
+            </ul>
             <p className="text-justify">{product.description}</p>
             <div className="flex justify-between w-1/2 items-center">
-            <PriceRow>₹{product.price}</PriceRow>
-            <button onClick={()=>addProduct(product._id)} className="border-2 bg-green-800 border-green-800 rounded-md text-white my-4 py-1 px-6 ">Add to cart</button>
+              <PriceRow>₹{product.price}</PriceRow>
+              <button
+                onClick={() => addProduct(product._id)}
+                className="border-2 bg-green-800 border-green-800 rounded-md text-white my-4 py-1 px-6 "
+              >
+                Add to cart
+              </button>
             </div>
           </Box>
         </ColWrapper>
