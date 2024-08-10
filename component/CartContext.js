@@ -6,6 +6,8 @@ export const CartContext = createContext({});
 export function CartContextProvider({ children }) {
   const ls = typeof window !== "undefined" ? window.localStorage : null;
   const [cartProducts, setCartProducts] = useState([]);
+  const [filter,setFilter]=useState(false)
+  const [selectedCategory,setCategory]=useState([])
   useEffect(() => {
     if(cartProducts?.length>0){
 
@@ -34,7 +36,7 @@ function removeProduct(productId){
     });
   }
   return (
-    <CartContext.Provider value={{ setCartProducts, cartProducts,addProduct,removeProduct }}>
+    <CartContext.Provider value={{ setCartProducts, cartProducts,addProduct,removeProduct ,setFilter,filter,selectedCategory,setCategory}}>
       {children}
     </CartContext.Provider>
   );

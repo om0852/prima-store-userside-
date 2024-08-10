@@ -119,7 +119,7 @@ const CartPage = () => {
   const lessOfThisProduct = (id) => {
     removeProduct(id);
   };
-
+let charges=0
   return (
     <>
       <Header />
@@ -139,6 +139,7 @@ const CartPage = () => {
                 </thead>
                 <tbody>
                   {products.map((data, index) => {
+                    charges+=data.delivery_charges
                     return (
                       <tr key={index}>
                         <ProductInfoCell>
@@ -171,8 +172,8 @@ const CartPage = () => {
                   })}
                   <tr>
                     <td></td>
-                    <td></td>
-                    <td>₹{total}</td>
+                    <td>delivery charges:₹{charges}</td>
+                    <td>₹{total+charges}</td>
                   </tr>
                 </tbody>
               </Table>

@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import Header from "@/component/Header";
@@ -6,11 +7,22 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Product from "@/models/Product";
 import { connectToDB } from "@/libs/connect";
 import NewProducts from "@/component/NewProducts";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ featuredProduct, newProduct }) {
   // console.log(featuredProduct)
+  const router = useRouter();
+  const { data: session } = useSession();
+  useEffect(()=>{
+    if (!session) {
+      router.push("/login")
+    }  
+  },[session])
+  
+  
 
   return (
     <>

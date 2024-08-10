@@ -66,14 +66,6 @@ const Header = () => {
   const { cartProducts } = useContext(CartContext);
   const [mobileNavActive, setMobileNavActive] = useState(false);
 
-  const { data: session } = useSession();
-  useEffect(()=>{
-    if (!session) {
-      router.push("/login")
-    }  
-  },[session])
-  
-  
   return (
     <StyledHeader>
       <Center>
