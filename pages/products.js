@@ -54,7 +54,7 @@ const ProductPage = () => {
 
           <ProductGrid>
             {allProduct &&
-              allProduct.map((product, index) => (
+              allProduct?.map((product, index) => (
                 <ProductBox key={index} {...product} />
               ))}
           </ProductGrid>
