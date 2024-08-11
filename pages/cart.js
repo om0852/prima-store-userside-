@@ -6,6 +6,7 @@ import Input from "@/component/Input";
 import Table from "@/component/StyledTable";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -49,17 +50,24 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 const CartPage = () => {
+  
   const { cartProducts, addProduct, removeProduct,setCartProducts } = useContext(CartContext);
   const { data: session } = useSession();
   const [products, setProducts] = useState([]);
   const [address, setAddress] = useState({email:session?.user?.email});
   const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
+  
+  
   let total = 0;
   for (const pId of cartProducts) {
     const price = products.find((p) => p._id == pId)?.price || 0;
     total += price;
   }
   const handlePayment = async () => {
+    if (!session) {
+      router.push("/login")
+    }  
     setIsProcessing(true);
     try {
       const options = {
@@ -74,6 +82,8 @@ const CartPage = () => {
               ...address,
               cartProducts: cartProducts.join(","),
               totalPrice: total,
+              paid:true,
+              paymentType:"online"
             });
             setCartProducts([]);
             localStorage.setItem("cart",[])
@@ -119,7 +129,30 @@ const CartPage = () => {
   const lessOfThisProduct = (id) => {
     removeProduct(id);
   };
+  
 let charges=0
+
+const handleCOD=async()=>{
+  try {
+    if (!session) {
+      router.push("/login")
+    }  
+    const response1 = await axios.post("/api/checkout", {
+      ...address,
+      cartProducts: cartProducts.join(","),
+      totalPrice: total,
+      paid:false,
+      paymentType:"COD"
+
+    });
+    setCartProducts([]);
+    localStorage.setItem("cart",[])
+
+    
+  } catch (error) {
+   
+  }
+}
   return (
     <>
       <Header />
@@ -263,6 +296,13 @@ let charges=0
                   className="px-2 py-1 w-full text-md bg-black text-white rounded-md my-3 border-2 border-black"
                 >
                   Continue to payment
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCOD}
+                  className="px-2 py-1 w-full text-md bg-black text-white rounded-md my-3 border-2 border-black"
+                >
+                  Cash on deilvery
                 </button>
               </form>
             </Box>

@@ -14,6 +14,7 @@ const Title = styled.h1`
   margin: 0;
   text-transform: capitalize;
   line-height: 8vh;
+  color: red;
   margin-bottom: 1vh;
   font-size: 3rem;
   @media screen and (min-width: 786px) {

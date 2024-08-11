@@ -11,6 +11,7 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    console.log(session?.user?.email)
     if (session?.user?.email) {
       axios
         .post("/api/myorders", { email: session.user.email })
@@ -34,15 +35,16 @@ const MyOrders = () => {
       <div className="w-full h-auto">
         {/* <Title>My Orders</Title> */}
         <Title className="py-2 px-4">My Orders</Title>
-        {orders.length==0 &&         <Title className="py-2 px-4 text-center">No Order Found</Title>
- }
+        {orders.length == 0 && (
+          <Title className="py-2 px-4 text-center">No Order Found</Title>
+        )}
         {orders &&
           orders.map((order, index) => (
-            <div key={index} className="w-full border-y-2 border-gray-400">
+            <div key={index} className="w-full border-y-2 border-gray-200">
               {order.line_items &&
                 order.line_items.map((item, idx) => (
                   <Link
-                  href={`/myorders/${order._id}?pid=${item.productId}`}
+                    href={`/myorders/${order._id}?pid=${item.productId}`}
                     key={idx}
                     className="flex items-center border-b-2 border-gray-400 space-x-4 p-4"
                   >
@@ -61,7 +63,7 @@ const MyOrders = () => {
                       <p className="capitalize text-2xl font-semibold">
                         {item.title}
                       </p>
-                      <p className="capitalize">
+                      <p className="capitalize text-xl font-semibold">
                         ₹{item.price_data.unit_amount}
                       </p>
                     </div>

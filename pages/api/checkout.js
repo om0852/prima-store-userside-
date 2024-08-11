@@ -2,6 +2,7 @@ import { connectToDB } from "@/libs/connect";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
 import Razorpay from "razorpay";
+import { EmailSender } from "./email";
 
 
     const razorpay = new Razorpay({
@@ -27,7 +28,9 @@ export default async function handler(req, res) {
       street_address,
       country,
       cartProducts,
-      totalPrice
+      totalPrice,
+      paid,
+      paymentType
     } = req.body;
 console.log(req.body)
     const productIds = cartProducts.split(",");
@@ -64,7 +67,8 @@ console.log(req.body)
       country,
       code,
       number,
-      paid:true,
+      paid:paid,
+      paymentType,
       street_address,
       
     });
@@ -74,6 +78,7 @@ const order= await razorpay.orders.create({
   receipt:"reciept_" + orderDoc._id
 
 })
+EmailSender(`<h1>Hey Admin New Order is Arrive go and check it out <a href="${process.env.ADMIN_URL}/orders">check</a></h1>`)
     res.json({ orderId:order.id ,id:orderDoc._id});
   } catch (error) {
     console.log(error)

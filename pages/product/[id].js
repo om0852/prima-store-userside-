@@ -35,7 +35,7 @@ const PriceRow = styled.div`
   display: flex;
   gap: 20px;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   align-items: center;
 `;
 const ProductPage = ({ product }) => {
@@ -49,23 +49,45 @@ const ProductPage = ({ product }) => {
             <ProductImages images={product.images} />
           </WhiteBox>
           <Box>
-            <Title>{product?.title}</Title>
+            <Title style={{fontSize:"1.9rem"}}>{product?.title}</Title>
             <ul>
               {Object.entries(product.properties).map(([key, value]) => (
                 <li key={key}>
-                  {key}: {value}
+                  <span className="text-xl font-semibold">{key}</span>: {value}
                 </li>
               ))}
             </ul>
-            <p className="text-justify">{product.description}</p>
-            <div className="flex justify-between w-1/2 items-center">
+            <p className="text-justify my-4">{product.description}</p>
+            <div className=" justify-between w-1/2 items-center">
               <PriceRow>₹{product.price}</PriceRow>
               <button
-                onClick={() => addProduct(product._id)}
-                className="border-2 bg-green-800 border-green-800 rounded-md text-white my-4 py-1 px-6 "
-              >
-                Add to cart
-              </button>
+            onClick={() => addProduct(_id)}
+            style={{
+              background: "linear-gradient(to bottom right, #6B46C1, #4299E1)",
+              color: "#fff",
+              fontWeight: "500",
+              borderRadius: "0.5rem",
+              fontSize: "0.875rem",
+              width: "100%",
+              padding: "0.625rem 1.25rem",
+              textAlign: "center",
+              marginRight: "0.5rem",
+              marginBottom: "0.5rem",
+              transition: "background 0.3s ease-in-out",
+              outline: "none",
+              boxShadow: "0 0 10px rgba(66, 153, 225, 0.5)",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background =
+                "linear-gradient(to bottom left, #6B46C1, #4299E1)")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.background =
+                "linear-gradient(to bottom right, #6B46C1, #4299E1)")
+            }
+          >
+            Add to cart
+          </button>
             </div>
           </Box>
         </ColWrapper>

@@ -9,25 +9,19 @@ import { connectToDB } from "@/libs/connect";
 import NewProducts from "@/component/NewProducts";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Info from "@/component/Info";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ featuredProduct, newProduct }) {
   // console.log(featuredProduct)
-  const router = useRouter();
-  const { data: session } = useSession();
-  useEffect(()=>{
-    if (!session) {
-      router.push("/login")
-    }  
-  },[session])
-  
   
 
   return (
     <>
       <Header />
       {featuredProduct && <Featured product={featuredProduct} />}{" "}
+      <Info/>
       {newProduct && <NewProducts products={newProduct} />}{" "}
     </>
   );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -7,13 +7,15 @@ import { CartContext } from "./CartContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 const StyledHeader = styled.header`
-  background-color: #222;
+  background-color: white;
 `;
 const Logo = styled(Link)`
   color: #fff;
   text-decoration: none;
   position: relative;
   z-index: 3;
+  z-index: 101;
+  display: flex;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -30,7 +32,8 @@ const StyledNav = styled.nav`
   bottom: 0px;
   left: 0px;
   padding: 70px 20px 20px;
-  background-color: #222;
+  background-color: white;
+  z-index: 100;
   gap: 15px;
   @media screen and (min-width: 786px) {
     display: flex;
@@ -40,7 +43,9 @@ const StyledNav = styled.nav`
 `;
 const NavLink = styled(Link)`
   display: block;
-  color: #aaa;
+  color:black;
+  font-weight: 500;
+
   margin: 2vh 0;
   text-decoration: none;
   @media screen and (min-width: 786px) {
@@ -53,7 +58,7 @@ const NavButton = styled.div`
   width: 30px;
   height: 30px;
   position: relative;
-  z-index: 3;
+  z-index: 101;
   border: 0;
   color: red;
   cursor: pointer;
@@ -62,7 +67,7 @@ const NavButton = styled.div`
   }
 `;
 const Header = () => {
- const  router = useRouter();
+  const router = useRouter();
   const { cartProducts } = useContext(CartContext);
   const [mobileNavActive, setMobileNavActive] = useState(false);
 
@@ -70,13 +75,13 @@ const Header = () => {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={"/"}>PrimaStore</Logo>
+          <Logo href={"/"}><img src="/newlogo.png" width={70}/><span className="text-black relative top-[20px]" style={{position:"relative",top:"-5px"}}>Store</span></Logo>
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={"/"}>Home</NavLink>
             <NavLink href={"/products"}>All Product</NavLink>
             <NavLink href={"/myorders"}>My Orders</NavLink>
             <NavLink href={"/cart"}>Cart({cartProducts.length})</NavLink>
-            <NavLink href={"/"} onClick={() => signOut()}>
+            <NavLink href={"/login"} onClick={() => signOut()}>
               Logout
             </NavLink>
           </StyledNav>
