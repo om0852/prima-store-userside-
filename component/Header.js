@@ -81,7 +81,7 @@ const Header = () => {
             <NavLink href={"/products"}>All Product</NavLink>
             <NavLink href={"/myorders"}>My Orders</NavLink>
             <NavLink href={"/cart"}>Cart({cartProducts.length})</NavLink>
-            <NavLink href={"/login"} onClick={() => signOut()}>
+            <NavLink href={"/login"} style={{color:"red",fontWeight:700}} onClick={() => signOut()}>
               Logout
             </NavLink>
           </StyledNav>

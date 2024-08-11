@@ -10,6 +10,7 @@ import NewProducts from "@/component/NewProducts";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Info from "@/component/Info";
+import Banner from "@/models/Banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +31,9 @@ export default function Home({ featuredProduct, newProduct }) {
 export async function getServerSideProps() {
   const faeturedproductId = "66adb1718f4fcefa38c05ac6";
   await connectToDB();
-  const featuredProduct = await Product.findById(faeturedproductId);
+  const banner =await Banner.findOne();
+  console.log(banner);
+  const featuredProduct = await Product.findById(banner.id);
   const newProduct = await Product.find(
     {},
     null,

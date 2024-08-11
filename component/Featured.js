@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Center from "./Center";
 import styled from "styled-components";
 import Buttons from "./Buttons";
@@ -76,10 +76,8 @@ const ButtonWrapper = styled.div`
   margin-top: 3vh;
 `;
 const Featured = ({product}) => {
-  const {setCartProducts,addProduct}=useContext(CartContext)
-   function addFeaturedToCart(product){
-    addProduct(product)    
-  }
+  const {setCartProducts,addProduct}=useContext(CartContext);
+  
   return (
     <Bg>
       <Center>
