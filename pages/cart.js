@@ -131,16 +131,17 @@ const CartPage = () => {
     try {
       if (!session) {
         router.push("/login");
+      } else {
+        const response1 = await axios.post("/api/checkout", {
+          ...address,
+          cartProducts: cartProducts.join(","),
+          totalPrice: total,
+          paid: false,
+          paymentType: "COD",
+        });
+        setCartProducts([]);
+        localStorage.setItem("cart", []);
       }
-      const response1 = await axios.post("/api/checkout", {
-        ...address,
-        cartProducts: cartProducts.join(","),
-        totalPrice: total,
-        paid: false,
-        paymentType: "COD",
-      });
-      setCartProducts([]);
-      localStorage.setItem("cart", []);
     } catch (error) {}
   };
   return (
