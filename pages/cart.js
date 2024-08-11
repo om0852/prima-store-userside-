@@ -17,7 +17,6 @@ const ColumnsWrapper = styled.div`
   margin-top: 40px;
   @media screen and (min-width: 768px) {
     grid-template-columns: 1.3fr 0.7fr;
-
   }
 `;
 
@@ -50,15 +49,14 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 const CartPage = () => {
-  
-  const { cartProducts, addProduct, removeProduct,setCartProducts } = useContext(CartContext);
+  const { cartProducts, addProduct, removeProduct, setCartProducts } =
+    useContext(CartContext);
   const { data: session } = useSession();
   const [products, setProducts] = useState([]);
-  const [address, setAddress] = useState({email:session?.user?.email});
+  const [address, setAddress] = useState({ email: session?.user?.email });
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
-  
-  
+
   let total = 0;
   for (const pId of cartProducts) {
     const price = products.find((p) => p._id == pId)?.price || 0;
@@ -66,44 +64,41 @@ const CartPage = () => {
   }
   const handlePayment = async () => {
     if (!session) {
-      router.push("/login")
-    }  
-    setIsProcessing(true);
-    try {
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
-        amount: total * 100,
-        currency: "INR",
-        name: "Prima Store",
-        description: "test transaction",
-        handler: async function (response) {
-          try {
-            const response1 = await axios.post("/api/checkout", {
-              ...address,
-              cartProducts: cartProducts.join(","),
-              totalPrice: total,
-              paid:true,
-              paymentType:"online"
-            });
-            setCartProducts([]);
-            localStorage.setItem("cart",[])
+      router.push("/login");
+    } else {
+      setIsProcessing(true);
+      try {
+        const options = {
+          key: process.env.NEXT_PUBLIC_RAZORPAY_ID,
+          amount: total * 100,
+          currency: "INR",
+          name: "Prima Store",
+          description: "test transaction",
+          handler: async function (response) {
+            try {
+              const response1 = await axios.post("/api/checkout", {
+                ...address,
+                cartProducts: cartProducts.join(","),
+                totalPrice: total,
+                paid: true,
+                paymentType: "online",
+              });
+              setCartProducts([]);
+              localStorage.setItem("cart", []);
+            } catch (error) {}
+          },
+          prefill: {
+            name: address.name,
+            email: address.email,
+            contact: address.phoneno,
+          },
+        };
 
-            
-          } catch (error) {
-           
-          }
-        },
-        prefill: {
-          name: address.name,
-          email: address.email,
-          contact: address.phoneno,
-        },
-      };
-
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    } catch (error) {
-      console.log(error);
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -129,30 +124,25 @@ const CartPage = () => {
   const lessOfThisProduct = (id) => {
     removeProduct(id);
   };
-  
-let charges=0
 
-const handleCOD=async()=>{
-  try {
-    if (!session) {
-      router.push("/login")
-    }  
-    const response1 = await axios.post("/api/checkout", {
-      ...address,
-      cartProducts: cartProducts.join(","),
-      totalPrice: total,
-      paid:false,
-      paymentType:"COD"
+  let charges = 0;
 
-    });
-    setCartProducts([]);
-    localStorage.setItem("cart",[])
-
-    
-  } catch (error) {
-   
-  }
-}
+  const handleCOD = async () => {
+    try {
+      if (!session) {
+        router.push("/login");
+      }
+      const response1 = await axios.post("/api/checkout", {
+        ...address,
+        cartProducts: cartProducts.join(","),
+        totalPrice: total,
+        paid: false,
+        paymentType: "COD",
+      });
+      setCartProducts([]);
+      localStorage.setItem("cart", []);
+    } catch (error) {}
+  };
   return (
     <>
       <Header />
@@ -172,7 +162,7 @@ const handleCOD=async()=>{
                 </thead>
                 <tbody>
                   {products.map((data, index) => {
-                    charges+=data.delivery_charges
+                    charges += data.delivery_charges;
                     return (
                       <tr key={index}>
                         <ProductInfoCell>
@@ -197,7 +187,8 @@ const handleCOD=async()=>{
                           </button>
                         </td>
                         <td>
-                        ₹{data.price *
+                          ₹
+                          {data.price *
                             cartProducts.filter((id) => id === data._id).length}
                         </td>
                       </tr>
@@ -206,7 +197,7 @@ const handleCOD=async()=>{
                   <tr>
                     <td></td>
                     <td>delivery charges:₹{charges}</td>
-                    <td>₹{total+charges}</td>
+                    <td>₹{total + charges}</td>
                   </tr>
                 </tbody>
               </Table>
@@ -285,7 +276,7 @@ const handleCOD=async()=>{
                 {/* <Input type="text" placeholder="Address 1" />
               <Input type="text" placeholder="Address 2" /> */}
                 <input
-                required
+                  required
                   type="hidden"
                   name="cartProducts"
                   value={cartProducts.join(",")}
