@@ -6,6 +6,7 @@ import Center from "./Center";
 import { CartContext } from "./CartContext";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 const StyledHeader = styled.header`
   background-color: white;
 `;
@@ -73,6 +74,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
+      <Toaster/>
       <Center>
         <Wrapper>
           <Logo href={"/"}><img src="/newlogo.png" width={70}/><span className="text-black relative top-[20px]" style={{position:"relative",top:"-5px"}}>Store</span></Logo>

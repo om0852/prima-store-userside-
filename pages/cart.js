@@ -8,6 +8,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 
 const ColumnsWrapper = styled.div`
@@ -85,6 +86,8 @@ const CartPage = () => {
               });
               setCartProducts([]);
               localStorage.setItem("cart", []);
+              toast.success("Product Placed")
+
             } catch (error) {}
           },
           prefill: {
@@ -139,6 +142,7 @@ const CartPage = () => {
           paid: false,
           paymentType: "COD",
         });
+        toast.success("Product Placed")
         setCartProducts([]);
         localStorage.setItem("cart", []);
       }
