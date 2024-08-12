@@ -80,7 +80,7 @@ const CartPage = () => {
               const response1 = await axios.post("/api/checkout", {
                 ...address,
                 cartProducts: cartProducts.join(","),
-                totalPrice: total,
+                totalPrice: totalcharges,
                 paid: true,
                 paymentType: "online",
               });
@@ -138,7 +138,7 @@ const CartPage = () => {
         const response1 = await axios.post("/api/checkout", {
           ...address,
           cartProducts: cartProducts.join(","),
-          totalPrice: total,
+          totalPrice: total+charges,
           paid: false,
           paymentType: "COD",
         });
